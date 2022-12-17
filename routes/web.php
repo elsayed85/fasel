@@ -36,6 +36,7 @@ Route::get('search', function () {
 Route::get('test', function () {
 
 
+    
     return view('search' , [
     ]);
 })->name('test');
