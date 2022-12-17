@@ -2,7 +2,7 @@
 
 @section('after_css')
 <link href="{{ asset('css/video-js.css') }}" rel="stylesheet" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/videojs-resolution-switcher/0.4.2/videojs-resolution-switcher.css">
+<link rel="stylesheet" href="{{ asset('css/videojs-resolution-switcher.css') }}">
 @endsection
 
 @section('banner')
@@ -14,10 +14,8 @@
                     <video id="videoPlayer" class="video-js vjs-big-play-centered w-100"
                         controls
                         preload="auto"
-                        autoplay
-                        loop
-                        muted
-                        width="640" height="360"
+                        width="100%"
+                        height="550px"
                         poster="{{ $movie['photo'] }}">
                     </video>
                 </div>
@@ -226,21 +224,22 @@
 <script src="{{ asset('js/video.min.js') }}"></script>
 @endsection
 @section("after_js")
-<script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-resolution-switcher/0.4.2/videojs-resolution-switcher.min.js"></script>
+<script src="{{ asset('js/videojs-resolution-switcher.min.js') }}"></script>
 <script>
 
 var player = videojs('videoPlayer', {
-controls: true,
-poster: "images/slider/slider1.jpg",
-plugins: {
-    videoJsResolutionSwitcher: {
-      default: {{ str_replace('p' , '' , request('q')) }},
-      dynamicLabel: true
+    controls: true,
+    poster: "images/slider/slider1.jpg",
+    plugins: {
+        videoJsResolutionSwitcher: {
+            default: '720p',
+            dynamicLabel: true
+        }
     }
-}
 });
 
-player.updateSrc([
+
+player.src([
     @foreach ($videos as $video_el)
     @if($video_el['label'] != "Original")
     {
